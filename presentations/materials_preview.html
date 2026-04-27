@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kinship — Materials</title>
+<style>
+  :root {
+    --header-h: 61px;
+    --panel-h: 52px;
+    --nav-w: 220px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #adfafd 0%, #ffffff 15%);
+    color: #1a1a1a;
+    min-height: 100vh;
+  }
+
+  /* --- FIXED SITE HEADER --- */
+  .site-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--header-h);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #197AFF;
+    z-index: 300;
+  }
+
+  .logo { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; color: #fff; }
+
+  .header-content-area {
+    position: absolute;
+    left: var(--nav-w); right: 0; top: 0; bottom: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding-right: 60px;
+    pointer-events: none;
+  }
+
+  .doc-title {
+    font-size: 17px; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #fff; white-space: nowrap;
+  }
+
+  /* --- FIXED PANEL HEADER --- */
+  .panel-header {
+    position: fixed;
+    top: var(--header-h);
+    left: var(--nav-w); right: 0;
+    height: var(--panel-h);
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(8px);
+    z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    padding-right: 60px;
+  }
+
+  .tab-heading {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #888;
+  }
+
+  /* --- LAYOUT --- */
+  .layout {
+    display: flex;
+    padding-top: calc(var(--header-h) + var(--panel-h));
+    min-height: 100vh;
+  }
+
+  /* --- SIDEBAR --- */
+  aside {
+    width: var(--nav-w);
+    flex-shrink: 0;
+    border-right: 1px solid rgba(0,0,0,0.08);
+    background: rgba(255,255,255,0.3);
+    position: fixed;
+    top: var(--header-h);
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 24px 0;
+    z-index: 100;
+    scrollbar-width: none;
+  }
+  aside::-webkit-scrollbar { display: none; }
+
+  .tab {
+    display: flex; align-items: center; gap: 12px; padding: 10px 20px;
+    font-size: 13px; font-weight: 500; color: #666; cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: color 0.15s, background 0.15s, border-color 0.15s;
+    user-select: none; line-height: 1.3;
+  }
+
+  .tab:hover { color: #111; background: rgba(25,122,255,0.06); }
+  .tab.active { color: #111; font-weight: 600; border-left-color: #197AFF; background: rgba(25,122,255,0.08); }
+
+  .tab-num {
+    flex-shrink: 0; width: 20px; height: 20px; line-height: 20px; text-align: center;
+    font-size: 10px; font-weight: 700; border-radius: 50%;
+    background: rgba(0,0,0,0.06); color: #888;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .tab.active .tab-num { background: #197AFF; color: #fff; }
+
+  .subnav { display: none; flex-direction: column; padding: 2px 0 6px 52px; }
+  .tab.active + .subnav { display: flex; }
+
+  .subnav a {
+    font-size: 12px; color: #888; text-decoration: none;
+    padding: 5px 0 5px 10px; line-height: 1.4;
+    border-left: 2px solid transparent; margin-left: -10px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .subnav a:hover { color: #197AFF; }
+
+  /* --- MAIN CONTENT (text column) --- */
+  main {
+    flex-shrink: 0;
+    width: 700px;
+    margin-left: var(--nav-w);
+    padding: 40px;
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* --- SECTION DIVIDER HEADER --- */
+  .section-header {
+    margin: 60px 0 24px;
+    padding-bottom: 16px;
+    scroll-margin-top: calc(var(--header-h) + var(--panel-h) + 24px);
+  }
+
+  .section-header:first-child { margin-top: 0; }
+
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #999; margin-bottom: 4px;
+  }
+
+  .section-title {
+    font-size: 20px; font-weight: 700; color: #111; letter-spacing: -0.3px;
+  }
+
+  p { font-size: 15px; line-height: 1.7; color: #444; margin-bottom: 16px; }
+
+  ul { list-style: none; margin-bottom: 20px; }
+
+  ul li {
+    font-size: 15px; line-height: 1.6; color: #444;
+    padding: 10px 0 10px 20px; position: relative;
+  }
+
+  ul li::before {
+    content: ''; position: absolute; left: 0; top: 19px;
+    width: 7px; height: 7px; border-radius: 50%; background: #197AFF; opacity: 0.5;
+  }
+
+  ul li strong { color: #111; font-weight: 600; }
+
+  .quote {
+    border-left: 3px solid #197AFF; padding: 16px 20px; margin: 24px 0;
+    background: rgba(25,122,255,0.05); border-radius: 0 8px 8px 0;
+  }
+
+  .quote p { font-size: 16px; font-style: italic; color: #333; margin: 0; line-height: 1.6; }
+
+  .steps { margin-bottom: 20px; }
+
+  .step { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(0,0,0,0.06); align-items: flex-start; }
+  .step:last-child { border-bottom: none; }
+
+  .step-num {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+    background: #197AFF; color: #fff; font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; margin-top: 1px;
+  }
+
+  .step-text { font-size: 15px; line-height: 1.6; color: #444; }
+  .step-text strong { color: #111; font-weight: 600; }
+
+  .callout {
+    background: rgba(25,122,255,0.06); border: 1px solid rgba(25,122,255,0.2);
+    border-radius: 8px; padding: 14px 18px; margin: 20px 0;
+    font-size: 14px; color: #555; line-height: 1.6;
+  }
+
+  .callout strong { color: #197AFF; font-weight: 600; }
+
+  .soon {
+    display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: #197AFF; background: rgba(25,122,255,0.08);
+    border: 1px solid rgba(25,122,255,0.25); padding: 2px 7px; border-radius: 10px;
+    margin-left: 8px; vertical-align: middle;
+  }
+
+  /* --- IMAGE COLUMN --- */
+  .image-col {
+    flex-shrink: 0;
+    width: 700px;
+    position: sticky;
+    top: calc(var(--header-h) + var(--panel-h));
+    height: calc(100vh - var(--header-h) - var(--panel-h));
+    overflow-y: auto;
+    padding: 40px;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .image-col::-webkit-scrollbar { display: none; }
+
+  .image-set { display: none; flex-direction: column; gap: 24px; }
+  .image-set.active { display: flex; }
+  .image-set > img { display: block; max-width: 100%; border-radius: 8px; margin: 0 auto; }
+  .img-spacer { height: 35px; }
+
+  .gallery { display: flex; flex-direction: column; gap: 12px; }
+  .gallery-images { position: relative; }
+  .gallery-img { max-width: 100%; border-radius: 8px; margin: 0 auto; opacity: 0; visibility: hidden; height: 0; transition: opacity 1s ease; }
+  .gallery-img.active { opacity: 1; visibility: visible; height: auto; }
+  .gallery-controls {
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+  }
+  .gallery-btn {
+    background: none; border: 1px solid rgba(0,0,0,0.15); border-radius: 50%;
+    width: 32px; height: 32px; font-size: 16px; cursor: pointer; color: #444;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .gallery-btn:hover { background: rgba(25,122,255,0.08); border-color: #197AFF; color: #197AFF; }
+  .gallery-counter { font-size: 12px; color: #999; font-weight: 500; }
+
+  /* --- CONTENT FOOTER --- */
+  .content-footer {
+    position: fixed;
+    bottom: 0;
+    left: var(--nav-w);
+    right: 0;
+    height: 48px;
+    padding: 0 40px;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    font-size: 12px;
+    color: #999;
+    z-index: 150;
+  }
+
+  .content-footer a {
+    color: #0000EE;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .content-footer a:hover {
+    color: #fff;
+    background: rgba(25,122,255,0.5);
+    text-decoration: none;
+  }
+
+  .content-footer .divider { color: rgba(0,0,0,0.15); }
+
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <span class="logo">Kinship</span>
+  <div class="header-content-area">
+    <div class="doc-title">Introducing Kinship Materials</div>
+  </div>
+  <span id="live-date" style="font-size:12px; font-weight:500; color:#fff; opacity:0.85;"></span>
+</header>
+
+<div class="panel-header">
+  <div class="tab-heading" id="tab-heading">Why Materials</div>
+</div>
+
+<div class="layout">
+
+  <aside>
+    <div class="tab active" onclick="goTo(0)"><span class="tab-num">1</span>Why Materials</div>
+
+    <div class="tab" onclick="goTo(1)"><span class="tab-num">2</span>The Problem</div>
+
+    <div class="tab" onclick="goTo(2)"><span class="tab-num">3</span>Getting Started</div>
+    <div class="subnav">
+      <a href="#" onclick="jumpTo('section-setup'); return false;">Setup steps</a>
+      <a href="#" onclick="jumpTo('section-quickstart'); return false;">Quick start</a>
+      <a href="#" onclick="jumpTo('section-notes'); return false;">Good to know</a>
+    </div>
+
+    <div class="tab" onclick="goTo(3)"><span class="tab-num">4</span>What Kinship Does</div>
+
+    <div class="tab" onclick="goTo(4)"><span class="tab-num">5</span>Web App</div>
+    <div class="subnav">
+      <a href="#" onclick="jumpTo('section-library'); return false;">Library</a>
+      <a href="#" onclick="jumpTo('section-item'); return false;">Item page</a>
+    </div>
+
+    <div class="tab" onclick="goTo(5)"><span class="tab-num">6</span>Add-In</div>
+
+    <div class="tab" onclick="goTo(6)"><span class="tab-num">7</span>What's Coming</div>
+
+    <div class="tab" onclick="goTo(7)"><span class="tab-num">8</span>Close</div>
+
+  </aside>
+
+  <main id="main-content">
+
+    <div class="panel active" id="panel-0">
+      <div class="section-header">
+        <div class="section-label">Opening</div>
+        <div class="section-title">Are you using Revit materials?</div>
+      </div>
+      <div class="quote"><p>"Virtual show of hands — who's actively using Revit materials on projects right now? And who's been wanting to but hasn't gotten there yet?"</p></div>
+      <p>Either way, materials are worth the investment. Here's why:</p>
+      <ul>
+        <li><strong>Appearance is tied to the model.</strong> Assign a material once and it shows up correctly in every view, every rendering, every export — no manual re-applying per view or visual style.</li>
+        <li><strong>Data lives in the model.</strong> Materials carry embedded parameters — manufacturer info, product codes, specs — that can be scheduled and reported directly from Revit. Great for finish schedules, material takeoffs, and documentation packages.</li>
+        <li><strong>Fast, iterative design.</strong> Swap a material globally across a model in seconds. Ideal for quick client options, design reviews, or pulling together a fast rendering without rebuilding anything.</li>
+      </ul>
+    </div>
+
+    <div class="panel" id="panel-1">
+      <div class="section-header">
+        <div class="section-label">The Problem</div>
+        <div class="section-title">Why materials have been such a pain</div>
+      </div>
+      <div class="quote"><p>"Has anyone ever opened a model and half the materials are just... gray? Or a texture that worked perfectly on your machine looks broken for everyone else?"</p></div>
+      <p>That's the thing we fixed.</p>
+      <p>The root cause is simple: Revit stores image maps as file paths. If that path doesn't exist on your machine — saved to someone's desktop, or a server you don't have access to — the material breaks. Every time. For everyone.</p>
+      <p>And the Revit Material Browser itself isn't much help. Dense, hard to navigate, and not exactly inspiring when you're trying to pick finishes.</p>
+    </div>
+
+    <div class="panel" id="panel-2">
+      <div class="section-header" id="section-setup">
+        <div class="section-label">Setup</div>
+        <div class="section-title">Steps</div>
+      </div>
+      <p>One toggle gets everything running. <strong>Settings → Model Tracking → Materials.</strong> Admin only.</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">Admin enables Materials in <strong>Settings → Model Tracking.</strong></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">Open your Revit template or a project with your standard material set.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">In the add-in: <strong>Add to Library → Materials</strong> — select all or choose specific ones.</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text">Done. Those materials are in the library, image maps handled, available to the whole team.</div></div>
+      </div>
+      <div class="section-header" id="section-quickstart">
+        <div class="section-label">Quick Start</div>
+        <div class="section-title">Let the model do the work</div>
+      </div>
+      <p>If your team is already tracking models, Kinship can build your material library for you.</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Track your models.</strong> Enable model tracking in Settings — Kinship will start picking up materials automatically as models sync.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Check Most Used.</strong> Materials that appear frequently across tracked models surface here — a ready-made shortlist of what your team actually uses.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Populate your library.</strong> Add the most-used materials from Most Used in one go. Your library starts with real project content, not a blank slate.</div></div>
+      </div>
+
+      <div class="section-header" id="section-notes">
+        <div class="section-label">Notes</div>
+        <div class="section-title">Good to know</div>
+      </div>
+      <div class="callout"><strong>Good to know:</strong> Turning this on doesn't populate your library automatically. Existing content is untouched — materials only appear in the library when you explicitly add them.</div>
+      <div class="callout"><strong>Using an .adsklib file?</strong> Load the materials into a Revit model first, then add to library from there. One extra step, but just the once.</div>
+    </div>
+
+    <div class="panel" id="panel-3">
+      <div class="section-header">
+        <div class="section-label">The Solution</div>
+        <div class="section-title">What Kinship now does</div>
+      </div>
+      <p>Kinship gives your materials a proper home. Visual, searchable, and reliable for the whole team.</p>
+      <ul>
+        <li><strong>Image map headaches → gone.</strong> Once a material is in Kinship, image file locations are handled automatically for every user. It just works.</li>
+        <li><strong>A library that's actually nice to use.</strong> Large realistic thumbnails, organized by class, searchable by keyword. A material browser you'd actually want to open.</li>
+        <li><strong>Visibility into your projects.</strong> Tracked models show which materials are in use — making it easier to keep things consistent across the team.</li>
+      </ul>
+    </div>
+
+    <div class="panel" id="panel-4">
+      <div class="section-header" id="section-library">
+        <div class="section-label">Web App</div>
+        <div class="section-title">Library → Materials section</div>
+      </div>
+      <ul>
+        <li><strong>Browse by Class</strong> — the recommended way to navigate. Masonry, Glass, Wood, etc. Custom classes can be created too.</li>
+        <li><strong>Browse by Appearance Asset Type</strong> — 19 fixed Revit types (Opaque, PBR, etc.). Useful for rendering-focused workflows.</li>
+        <li><strong>All Materials</strong> — full list, sortable and filterable by class, asset type, list, or Revit version.</li>
+        <li><strong>Utilities</strong> — recently added, most used, unused, recently edited.</li>
+      </ul>
+      <div class="section-header" id="section-item">
+        <div class="section-label">Web App</div>
+        <div class="section-title">The material item page</div>
+      </div>
+      <ul>
+        <li><strong>Large realistic thumbnail</strong> with consistent colors and hidden line previews — not Revit's sad gray swatch.</li>
+        <li><strong>Identity info</strong> — class, asset type, Revit version.</li>
+        <li><strong>Graphics</strong> — surface pattern, cut pattern, and shading previews.</li>
+        <li><strong>Appearance</strong> — image map previews and asset info.</li>
+        <li><strong>Description</strong> — admin-editable, searchable in both the web app and the add-in.</li>
+        <li><strong>Manufacturer links & Documentation</strong> — two flexible URL fields for spec sheets, product pages, or any external links. These are Kinship-side fields (like Description) — separate from the Manufacturer parameter in Identity. Use them however works for your team.</li>
+        <li><strong>Comments</strong> — leave feedback or flag questions on any material.</li>
+        <li><strong>Similar materials</strong> — matched by class and asset type.</li>
+        <li><strong>Files</strong> — attach PDFs, images, or any supporting docs.</li>
+      </ul>
+    </div>
+
+    <div class="panel" id="panel-5">
+      <div class="section-header">
+        <div class="section-label">Add-In</div>
+        <div class="section-title">Searching directly from Revit</div>
+      </div>
+      <ul>
+        <li><strong>Materials appear in search</strong> alongside families — filter to materials to narrow down.</li>
+        <li><strong>Preview before loading</strong> — click any material to see description and details first.</li>
+        <li><strong>Load directly</strong> into your open project with one click.</li>
+        <li><strong>Add to Library</strong> from any open model or family via Add to Library → Materials. You can also add materials directly from tracked models — a great way to build your library from real project content.</li>
+      </ul>
+    </div>
+
+    <div class="panel" id="panel-6">
+      <div class="section-header">
+        <div class="section-label">What's Next</div>
+        <div class="section-title">Sneak Peek at the Pipeline</div>
+      </div>
+      <ul>
+        <li><strong>Materials inside families</strong> <span class="soon">Coming soon</span> — browse which materials are applied to specific families directly in Kinship. No confirmed date yet — planned but not the immediate priority.</li>
+        <li><strong>Class and keynote edits writing back to Revit</strong> <span class="soon">Coming soon</span> — changes made in Kinship update in Revit on next load. Includes Mark parameters. Applies to the library; tracked model materials not in scope yet.</li>
+        <li><strong>Materials in the main library nav</strong> — the dedicated page is moving out of the callout section and into the primary navigation. The banner button in the library is staying for now, just slimmed down.</li>
+      </ul>
+    </div>
+
+    <div class="panel" id="panel-7">
+      <div class="section-header">
+        <div class="section-label">Close</div>
+        <div class="section-title">Over to you</div>
+      </div>
+      <div class="quote"><p>"What's the material problem that's been bugging you the longest — is it the broken textures, trying to find the right finish, or something else?"</p></div>
+      <div class="quote"><p>"If we could add one thing to how your team works with materials today, what would it be?"</p></div>
+      <div class="section-header" style="margin-top:40px;">
+        <div class="section-label">Further reading</div>
+        <div class="section-title">From the Kinship blog</div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:20px;">
+        <a href="https://readable-start-730466.framer.app/blog/now-in-kinship-materials" target="_blank" style="display:block; text-decoration:none; padding:14px 18px; border:1px solid rgba(25,122,255,0.2); border-radius:8px; background:rgba(25,122,255,0.04); transition:background 0.15s;">
+          <div style="font-size:15px; font-weight:600; color:#197AFF; margin-bottom:4px;">Now in Kinship: Materials</div>
+          <div style="font-size:11px; color:#aaa; margin-bottom:6px;">kinship.io/blog/now-in-kinship-materials</div>
+          <div style="font-size:14px; color:#555; line-height:1.5;">Overview of the new materials management tools and what they solve.</div>
+        </a>
+        <a href="https://readable-start-730466.framer.app/blog/getting-materials-into-families-and-between-projects" target="_blank" style="display:block; text-decoration:none; padding:14px 18px; border:1px solid rgba(25,122,255,0.2); border-radius:8px; background:rgba(25,122,255,0.04); transition:background 0.15s;">
+          <div style="font-size:15px; font-weight:600; color:#197AFF; margin-bottom:4px;">Getting Materials Into Families and Between Projects</div>
+          <div style="font-size:11px; color:#aaa; margin-bottom:6px;">kinship.io/blog/getting-materials-into-families-and-between-projects</div>
+          <div style="font-size:14px; color:#555; line-height:1.5;">How materials are assigned to families and how to move them between projects.</div>
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <div class="image-col">
+    <div class="image-set active" id="img-0"></div>
+    <div class="image-set" id="img-1"></div>
+    <div class="image-set" id="img-2">
+      <div class="img-spacer"></div>
+      <div class="gallery">
+        <div class="gallery-images" id="gallery-2-images">
+          <img class="gallery-img active" src="https://raw.githubusercontent.com/J3deye/kinshipCS/main/pres/assets/activation.gif" alt="Getting started demo">
+          <img class="gallery-img" src="https://raw.githubusercontent.com/J3deye/kinshipCS/main/pres/assets/most_used.png" alt="Most Used materials">
+        </div>
+        <div class="gallery-controls">
+          <button class="gallery-btn" onclick="gallery2Prev()">&#8592;</button>
+          <span class="gallery-counter" id="gallery-2-counter">1 / 2</span>
+          <button class="gallery-btn" onclick="gallery2Next()">&#8594;</button>
+        </div>
+      </div>
+    </div>
+    <div class="image-set" id="img-3"></div>
+    <div class="image-set" id="img-4">
+      <div class="img-spacer"></div>
+      <div class="gallery">
+        <div class="gallery-images">
+          <img class="gallery-img active" src="https://raw.githubusercontent.com/J3deye/kinshipCS/main/pres/assets/materials%20library.gif" alt="Materials library demo">
+          <img class="gallery-img" src="https://raw.githubusercontent.com/J3deye/kinshipCS/main/pres/assets/item%20page.gif" alt="Item page demo">
+        </div>
+        <div class="gallery-controls">
+          <button class="gallery-btn" onclick="galleryPrev()">&#8592;</button>
+          <span class="gallery-counter">1 / 2</span>
+          <button class="gallery-btn" onclick="galleryNext()">&#8594;</button>
+        </div>
+      </div>
+    </div>
+    <div class="image-set" id="img-5">
+      <div class="img-spacer"></div>
+      <img src="https://raw.githubusercontent.com/J3deye/kinshipCS/main/pres/assets/add-in.gif" alt="Add-in demo">
+    </div>
+    <div class="image-set" id="img-6"></div>
+    <div class="image-set" id="img-7"></div>
+  </div>
+
+</div>
+
+<div class="content-footer">
+  <a href="https://kinship.io/" target="_blank">Kinship.io 2026</a>
+  <span class="divider">·</span>
+  <a href="https://docs.kinship.io/get-started" target="_blank">Docs</a>
+  <span class="divider">·</span>
+  <a href="mailto:support@kinship.io">Support</a>
+</div>
+
+<script>
+  let cur = 0;
+
+  (function() {
+    const d = new Date();
+    document.getElementById('live-date').textContent = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  })();
+
+  function goTo(n) {
+    document.getElementById('panel-' + cur).classList.remove('active');
+    document.getElementById('img-' + cur).classList.remove('active');
+    document.querySelectorAll('.tab')[cur].classList.remove('active');
+    cur = n;
+    const panel = document.getElementById('panel-' + cur);
+    panel.classList.add('active');
+    document.getElementById('img-' + cur).classList.add('active');
+    const tabs = document.querySelectorAll('.tab');
+    tabs[cur].classList.add('active');
+    if (cur === 2) { gallery2Go(0); gallery2Fired = true; setTimeout(() => { gallery2Fired = false; }, 150); }
+    if (cur === 4) { galleryGo(0); gallery4Fired = true; setTimeout(() => { gallery4Fired = false; }, 150); }
+    const numEl = tabs[cur].querySelector('.tab-num');
+    document.getElementById('tab-heading').textContent = tabs[cur].textContent.replace(numEl ? numEl.textContent : '', '').trim();
+    window.scrollTo({ top: 0 });
+  }
+
+  // Gallery for panel 4 (Web App)
+  let galleryCur = 0;
+  const galleryImgs = document.querySelectorAll('#img-4 .gallery-img');
+  const galleryTotal = galleryImgs.length;
+
+  function galleryGo(n) {
+    galleryImgs[galleryCur].classList.remove('active');
+    galleryCur = (n + galleryTotal) % galleryTotal;
+    galleryImgs[galleryCur].classList.add('active');
+    document.querySelector('#img-4 .gallery-counter').textContent = (galleryCur + 1) + ' / ' + galleryTotal;
+  }
+
+  function galleryPrev() { galleryGo(galleryCur - 1); }
+  function galleryNext() { galleryGo(galleryCur + 1); }
+
+  // Gallery for panel 2 (Getting Started)
+  let gallery2Cur = 0;
+  const gallery2Imgs = document.querySelectorAll('#img-2 .gallery-img');
+  const gallery2Total = gallery2Imgs.length;
+
+  function gallery2Go(n) {
+    gallery2Imgs[gallery2Cur].classList.remove('active');
+    gallery2Cur = (n + gallery2Total) % gallery2Total;
+    gallery2Imgs[gallery2Cur].classList.add('active');
+    document.getElementById('gallery-2-counter').textContent = (gallery2Cur + 1) + ' / ' + gallery2Total;
+  }
+
+  function gallery2Prev() { gallery2Go(gallery2Cur - 1); }
+  function gallery2Next() { gallery2Go(gallery2Cur + 1); }
+
+  // Auto-advance galleries when scrolled near bottom of content
+  let gallery2Fired = false;
+  let gallery4Fired = false;
+
+  window.addEventListener('scroll', function() {
+    const panel = document.getElementById('panel-' + cur);
+    const rect = panel.getBoundingClientRect();
+    const nearBottom = rect.bottom <= window.innerHeight + 10;
+    if (nearBottom) {
+      if (cur === 2 && !gallery2Fired) { gallery2Fired = true; gallery2Go(1); }
+      if (cur === 4 && !gallery4Fired) { gallery4Fired = true; galleryGo(1); }
+    }
+  });
+
+  function jumpTo(sectionId) {
+    const el = document.getElementById(sectionId);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+
+</body>
+</html>
